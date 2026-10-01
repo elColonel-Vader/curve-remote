@@ -8,6 +8,12 @@ A local signature proves that the JAR matches the local signer's key. It does no
 
 The first handset trust-store inspection did not find our local certificate among 98 records. That is evidence of absence, not evidence that importing it would unlock COD signing.
 
+### Observed Curve 9360 acceptance result
+
+The local root was subsequently imported. A read-only USB inspection found the exact exported root certificate in the device's trust store, now containing 99 records. The signed MIDlet installation nevertheless failed with **909: application authentication failure** and **2-114: MIDlet certificate chain error**. Host verification of the certificate chain and JAR signature passes; JAR size and shared manifest/JAD attributes match.
+
+This is a failed handset acceptance test, not a prompt-free signing solution. Device clock, explicit certificate trust and eligibility as an application-signing protection-domain root remain to be checked. The error alone does not identify which of these checks failed.
+
 ## Prepare a proper test chain
 
 After private pairing and the JAR build described in [INSTALL.md](INSTALL.md), run:
@@ -35,6 +41,7 @@ The RSA/SHA-1 profile is solely for this legacy MIDP acceptance experiment. It i
 5. Find **Curve Remote Local Install Root**, inspect its certificate/fingerprint and compare it with the computer's output.
 6. If the fingerprint matches and the menu offers **Trust/Vertrauen**, trust this selected certificate. Do not trust unrelated certificates or alter all device roots.
 7. Inspect certificate details and record the trust status. A missing or disabled Trust menu is a device/policy restriction; do not claim success or modify the raw key-store database to bypass it.
+8. Check the handset's date, time and time zone against the certificate's validity interval. A freshly generated certificate is not valid before its issuance time; an old or incorrect phone clock can cause chain validation to fail. Correct the clock rather than disabling validity checks.
 
 These UI actions are based on the original [Curve 9360 user guide](https://fcc.report/FCC-ID/L6ARDX70UW/1524306.pdf), certificate sections around pages 287–292. Menu translations and available actions can differ with OS and policy.
 
