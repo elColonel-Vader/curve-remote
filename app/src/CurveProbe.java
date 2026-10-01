@@ -41,7 +41,7 @@ public final class CurveProbe extends MIDlet implements CommandListener, ChatVie
     private final Command back = new Command("Zurueck", Command.BACK, 0);
     private final Command more = new Command("Weitere Chats", Command.SCREEN, 1);
     private final Command wifi = new Command("WLAN testen", Command.SCREEN, 1);
-    private final StringItem connectionStatus = new StringItem("Verbindung", "Curve Remote 0.7.0 / lokales WLAN");
+    private final StringItem connectionStatus = new StringItem("Verbindung", "Curve Remote 0.7.1 / lokales WLAN");
     private List selection, messageHistory;
     private String[] historyIds;
     private String[] selectedIds, selectedFolders, selectedTitles;

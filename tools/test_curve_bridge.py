@@ -73,7 +73,7 @@ class BridgeTests(unittest.TestCase):
             raise RuntimeError("runner failed")
         self.server.runner = fail
         self.assertEqual(self.request()[0], b"\x01")
-        self.assertTrue(self.server.gate.acquire(blocking=False))
+        self.assertTrue(self.server.gate.acquire(timeout=1))
         self.server.gate.release()
 
     def test_version2_list_has_selected_id_frame(self):

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1 — host verification patch
+
+Wait up to one second for the server cleanup to release its concurrency gate instead of racing it immediately after reading the error response. No handset rendering or icon behaviour changed.
+
 ## 0.7.0 — initial experimental source release
 
 - Original launcher icon and Curve Remote launcher label.
