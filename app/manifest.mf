@@ -4,3 +4,4 @@ MIDlet-Vendor: CurveProject
 MIDlet-1: Curve Remote,/icon.png,CurveProbe
 MicroEdition-Profile: MIDP-2.0
 MicroEdition-Configuration: CLDC-1.1
+MIDlet-Permissions: javax.microedition.io.Connector.socket

@@ -16,6 +16,10 @@ A Java ME chat client for BlackBerry Curve 9360 (BlackBerry OS 7.1), connected o
 - Existing desktop chats are readable; only bridge-owned chats are writable, avoiding concurrent writers.
 - Dedicated Codex app-server with read-only sandbox and no handset approval actions.
 
+## Installation on the handset
+
+Follow the complete [phone installation guide](docs/INSTALL.md): prerequisites, private pairing, SDK checks, build, Barry USB loader, deployment, first connection and rollback. For certificate imports and the signed-MIDlet test, see [signing and trust](docs/SIGNING.md).
+
 ## Setup
 
 Requires Python 3, Java, Docker, authenticated Codex CLI and a Wi-Fi capable MIDP 2.0 / CLDC 1.1 handset. Supply BlackBerry JDE 7.1 `rapc.jar` and `net_rim_api.jar` in `app/sdk/` under their applicable terms.
