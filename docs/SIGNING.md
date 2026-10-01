@@ -12,7 +12,9 @@ The first handset trust-store inspection did not find our local certificate amon
 
 The local root was subsequently imported. A read-only USB inspection found the exact exported root certificate in the device's trust store, now containing 99 records. The signed MIDlet installation nevertheless failed with **909: application authentication failure** and **2-114: MIDlet certificate chain error**. Host verification of the certificate chain and JAR signature passes; JAR size and shared manifest/JAD attributes match.
 
-This is a failed handset acceptance test, not a prompt-free signing solution. Device clock, explicit certificate trust and eligibility as an application-signing protection-domain root remain to be checked. The error alone does not identify which of these checks failed.
+The handset reported 1 October 2026 at 16:03, after certificate issuance, and the user explicitly trusted the imported root. Repeating installation still returned the same 909 / 2-114 errors. A subsequent USB module inspection confirmed that the existing unsigned CurveProbe 0.7.0 remained installed.
+
+This is a failed handset acceptance test, not a prompt-free signing solution. Importing and trusting this local root did not make this signed MIDlet installable on the tested handset. The exact failing validation rule is unresolved; the error does not by itself prove whether the root lacks an application-signing protection domain or another device-specific certificate constraint failed. Do not present the experiment as a working fix or keep repeating an unchanged installer.
 
 ## Prepare a proper test chain
 

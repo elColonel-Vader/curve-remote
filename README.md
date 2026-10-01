@@ -6,6 +6,8 @@ A Java ME chat client for BlackBerry Curve 9360 (BlackBerry OS 7.1), connected o
 
 **Experimental source release.** The COD application is unsigned and the BlackBerry can prompt for network access. No private credentials, personal chat data, pre-paired binary or third-party SDK binaries are distributed.
 
+The local-root signing experiment failed on the Curve 9360 with 909 / 2-114 even after certificate import and explicit trust. The network warning remains unresolved; see the recorded [handset signing result](docs/SIGNING.md#observed-curve-9360-acceptance-result).
+
 ## Features
 
 - Compact chat/project header with status at top-right and original launcher icon.
