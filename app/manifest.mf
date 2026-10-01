@@ -1,0 +1,6 @@
+MIDlet-Name: CurveProbe
+MIDlet-Version: 0.7.0
+MIDlet-Vendor: CurveProject
+MIDlet-1: Curve Remote,/icon.png,CurveProbe
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1

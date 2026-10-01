@@ -1,0 +1,10 @@
+diagnostics/
+app/src/Pairing.java
+app/lib/
+app/sdk/
+app/classes/
+app/classes-pv/
+app/out/
+__pycache__/
+*.class
+.DS_Store

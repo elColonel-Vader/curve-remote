@@ -1,0 +1,28 @@
+{
+  "java_build_image": "eclipse-temurin:8-jdk@sha256:6f9f640cdc1a35e64b77daf1f48fcf7527953d9aa804916c8557e1aae954ecd5",
+  "artifacts": [
+    {
+      "path": "lib/cldcapi11.jar",
+      "url": "https://repo1.maven.org/maven2/org/microemu/cldcapi11/2.0.4/cldcapi11-2.0.4.jar",
+      "sha256": "f86f41bfb4097e4bd9cdfeca528960f6977cbda0f5785342adef9909a6a3baef"
+    },
+    {
+      "path": "lib/midpapi20.jar",
+      "url": "https://repo1.maven.org/maven2/org/microemu/midpapi20/2.0.4/midpapi20-2.0.4.jar",
+      "sha256": "b7f6ed5e0344c7000643ecc114e6edff3587e8e77face546af0e12ffd6dbe826"
+    },
+    {
+      "path": "lib/proguard.jar",
+      "url": "https://repo1.maven.org/maven2/net/sf/proguard/proguard-base/6.2.2/proguard-base-6.2.2.jar",
+      "sha256": "7587a3a415d6aea1946f597f4babe710a245f085bac4dc5e7cda653acfc39b03"
+    }
+  ],
+  "blackberry_jde": {
+    "version": "7.1.0",
+    "archive": "https://archive.lunar-project.org/BlackBerry%20OS/Development/JDE/BlackBerry_JDE_7.1.0.exe",
+    "archive_sha256": "2bf7117ad26e3e65d8c12032e0a1f90eb7487339169881ac084737e48d30b925",
+    "extraction": "CAB at byte 1724928, length 300569439; installer not executed",
+    "rapc_sha256": "617107f0ca2b3710544fc12bd63f6da147abfd33d77e87cef1f473bdbf279d0a",
+    "api_sha256": "b36d23121983e1115bbfa638eaf969c208d673ffb217b5ffc8e3cc90c045bb49"
+  }
+}
