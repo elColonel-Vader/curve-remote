@@ -1,6 +1,6 @@
 # Install Curve Remote on a BlackBerry Curve 9360
 
-This guide covers the computer, private pairing, handset build, USB deployment and first chat. The verified path is an **unsigned COD installed over USB**. The separate certificate experiment below is not yet a verified way to remove the network prompt.
+This guide covers the computer, private pairing, handset build, USB deployment and first chat. The current verified path is a **native, unsigned COD installed over USB**. On the tested Curve 9360 / OS 7.1.0.714, version 0.8.0 operated without a network prompt, including after app exit and restart. No certificate import is needed for that path; permission behavior on other devices or policies still needs verification.
 
 ## 1. Prepare the computer
 
@@ -43,10 +43,12 @@ The SDK is not bundled. Version, known archive provenance and SHA-256 checksums 
 ## 4. Build the handset application
 
 ```sh
-bash app/build.sh
+bash app/build_native.sh
 ```
 
-Expected outputs are `app/out/CurveProbe.cod` and `app/out/CurveProbe.jar`. Build logs are in `app/out/compiler.log`. The launcher icon is embedded as `/icon.png`. A missing SDK or stopped Docker engine is a build error, not a phone failure.
+Expected output is `app/out/native/CurveProbe.cod`, version 0.8.0. Build logs are in `app/out/native/compiler.log`. The launcher icon is embedded as `icon.png`. A missing SDK or stopped Docker engine is a build error, not a phone failure.
+
+The shared chat sources are adapted at build time to the native `UiApplication` lifecycle, graphics, keyboard, menus and screens. Closing uses an explicit handler that saves the draft and avoids the native generic "Save / Discard / Cancel" prompt. `bash app/build.sh` remains available for the older MIDlet fallback; its output is `app/out/CurveProbe.cod` and can still prompt repeatedly for network access.
 
 ## 5. Obtain the USB loader
 
@@ -102,7 +104,7 @@ Keep this terminal running. If macOS asks about incoming connections, allow acce
 ```sh
 LOADER=/absolute/path/to/barry-macos-arm/tools/bjavaloader
 "$LOADER" deviceinfo
-"$LOADER" load app/out/CurveProbe.cod
+"$LOADER" load app/out/native/CurveProbe.cod
 "$LOADER" dir
 ```
 
@@ -112,7 +114,7 @@ The load must finish with `done`; the directory must list module **CurveProbe** 
 
 1. Open Curve Remote. In the BlackBerry menu, choose **Einstellungen**.
 2. Set **Mac IP** to the computer's actual LAN address; save/return.
-3. If the operating system asks to allow the low-level network connection, approve this app's connection to your local bridge. This approval does not mean the code is signed.
+3. The tested native build connects without a network prompt. If your operating system/policy still asks, record the wording and check the app's connection permissions. Approving a network connection does not mean the code is signed.
 4. Wait for **Bereit** in the header.
 5. Send a short message with Enter. Check that Codex replies.
 6. Open **Chats**, then return. Open **Verlauf** and select a message. Verify the input remains dark and the message index works.
@@ -140,4 +142,4 @@ Remove Curve Remote through the handset application-management UI if no longer n
 
 ## Certificate and signed-MIDlet experiment
 
-See [SIGNING.md](SIGNING.md). That section describes a specific import/installation test and its acceptance criteria. It is not a requirement for the verified unsigned USB path, and the current release does not promise prompt-free code signing.
+See [SIGNING.md](SIGNING.md). It records both the successful native permission test and the rejected signed-MIDlet experiment. Certificate import is not a requirement for the native USB path, and the current release does not provide trusted code signing.

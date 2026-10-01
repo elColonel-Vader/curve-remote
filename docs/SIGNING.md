@@ -2,7 +2,9 @@
 
 ## What works and what is still unverified
 
-The verified deployment path is an unsigned COD loaded through USB. A root certificate is not required for that path, and its network prompt has not been eliminated.
+The verified deployment path is now the native unsigned COD built with `bash app/build_native.sh` and loaded through USB. On the tested Curve 9360 / OS 7.1.0.714, the user confirmed version 0.8.0 chats work without a network prompt, including after fully closing and reopening. No imported root certificate is needed for this native path. The application remains unsigned; other devices/policies may behave differently.
+
+This follows a separate native network test that also connected without a repeat prompt after restart. The production build keeps the existing chat protocol and rendering through a native UI adapter, and handles exit explicitly to save drafts without the test window's generic Save/Discard/Cancel dialog. This is a verified permission-behavior fix on this handset, not a successful certificate-signing fix.
 
 A local signature proves that the JAR matches the local signer's key. It does not prove the phone accepts that signer. RIM COD signatures and MIDP JAR/JAD signatures are different: the USB loader does not consume a MIDP JAD signature. A certificate trusted for TLS or secure email is not automatically assigned an application-signing protection domain.
 

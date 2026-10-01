@@ -2,11 +2,11 @@
 
 ![Curve Remote icon](app/assets/icon-128.png)
 
-A Java ME chat client for BlackBerry Curve 9360 (BlackBerry OS 7.1), connected over local Wi-Fi to a computer running Codex CLI. Fixed dark Canvas, direct QWERTY entry and trackpad navigation.
+A Java chat client for BlackBerry Curve 9360 (BlackBerry OS 7.1), connected over local Wi-Fi to a computer running Codex CLI. Shared Java ME chat code with a native BlackBerry UI adapter, dark transcript, direct QWERTY entry and trackpad navigation.
 
-**Experimental source release.** The COD application is unsigned and the BlackBerry can prompt for network access. No private credentials, personal chat data, pre-paired binary or third-party SDK binaries are distributed.
+**Experimental source release.** Version 0.8.0 uses a native BlackBerry Java entry point and UI adapter. On the tested Curve 9360 / OS 7.1.0.714, the user confirmed chat operation and no network prompt on initial launch or after closing and reopening. The COD remains unsigned; this does not establish certificate trust or guarantee the same permission behavior on other devices/policies. No private credentials, personal chat data, pre-paired binary or third-party SDK binaries are distributed.
 
-The local-root signing experiment failed on the Curve 9360 with 909 / 2-114 even after certificate import and explicit trust. The network warning remains unresolved; see the recorded [handset signing result](docs/SIGNING.md#observed-curve-9360-acceptance-result).
+The local-root signing experiment failed on the Curve 9360 with 909 / 2-114 even after certificate import and explicit trust. The native build resolves the observed repeated-prompt problem on this handset without using that signing experiment; see [signing and native permissions](docs/SIGNING.md).
 
 ## Features
 
@@ -24,23 +24,23 @@ Follow the complete [phone installation guide](docs/INSTALL.md): prerequisites, 
 
 ## Setup
 
-Requires Python 3, Java, Docker, authenticated Codex CLI and a Wi-Fi capable MIDP 2.0 / CLDC 1.1 handset. Supply BlackBerry JDE 7.1 `rapc.jar` and `net_rim_api.jar` in `app/sdk/` under their applicable terms.
+Requires Python 3, Java, Docker, authenticated Codex CLI and a Wi-Fi capable BlackBerry OS 7.1 handset. Supply BlackBerry JDE 7.1 `rapc.jar` and `net_rim_api.jar` in `app/sdk/` under their applicable terms.
 
 ```sh
 python3 tools/setup_pairing.py
 python3 tools/fetch_build_dependencies.py
 # Supply the two BlackBerry SDK JARs in app/sdk/.
-bash app/build.sh
+bash app/build_native.sh
 python3 tools/curve_bridge.py --bind YOUR_COMPUTER_LAN_IP --port 8767
 ```
 
 Pairing setup generates a unique private token for both bridge and handset. Keep `diagnostics/private/` and `app/src/Pairing.java` private; rebuild after changing the token. Set the computer IP in the handset settings (source example default: 192.168.1.10). Close the app before installing:
 
 ```sh
-/path/to/bjavaloader load app/out/CurveProbe.cod
+/path/to/bjavaloader load app/out/native/CurveProbe.cod
 ```
 
-Barry JavaLoader must be built separately. The launcher label is **Curve Remote**; the module/suite name remains CurveProbe to preserve local state. The build embeds `/icon.png`. This project does not restore BIS, BBM or discontinued messaging services.
+Barry JavaLoader must be built separately. The launcher label is **Curve Remote**; the module name remains CurveProbe. Chats are saved on the computer; preserve pairing and session files during updates. The build embeds `icon.png`. This project does not restore BIS, BBM or discontinued messaging services.
 
 ## Security and signing
 
@@ -57,7 +57,9 @@ python3 -m unittest discover -s tools -p 'test_*.py'
 bash tools/test_chat_ui.sh
 ```
 
-Python tests cover pairing, frame limits, sessions, paginated history and quotes. The Java harness runs the actual client/controller/rendering code using host adapters, checking keyboard navigation, drafts, history selection and packet decoding at two font sizes. Every rendered pixel is compared on white- and black-prefilled backgrounds to catch unpainted margins. Hardware validation is recorded in release notes; host checks do not replace it.
+Python tests cover pairing, frame limits, sessions, paginated history and quotes. The Java harness runs the actual shared client/controller/rendering code using host adapters, checking keyboard navigation, drafts, history selection and packet decoding at two font sizes. Every rendered pixel is compared on white- and black-prefilled backgrounds to catch unpainted margins. Native SDK compilation and real-device checks are separate from these host tests; CI does not bundle the proprietary SDK or test BlackBerry permission persistence.
+
+The v0.8.0 handset test confirmed chat operation without network prompts before and after restart. Two consecutive handset messages and their replies were also read back as two completed turns through the desktop thread API. An already-open desktop view may need reopening because the bridge runs its own app-server process rather than sharing desktop live events.
 
 ## Icon source
 
